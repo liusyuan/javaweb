@@ -1,0 +1,4 @@
+127.0.0.1 - - [09/Jun/2016:19:19:28 +0800] "GET /framework/ HTTP/1.1" 404 - http-bio-8080-exec-1 0
+127.0.0.1 - - [09/Jun/2016:19:19:33 +0800] "GET /javaweb/ HTTP/1.1" 404 - http-bio-8080-exec-2 0
+127.0.0.1 - - [09/Jun/2016:19:19:34 +0800] "GET /javaweb/ HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [09/Jun/2016:19:19:41 +0800] "GET /javaweb/index.html HTTP/1.1" 404 - http-bio-8080-exec-4 0
