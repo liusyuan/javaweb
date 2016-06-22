@@ -17,6 +17,7 @@ public class LoginFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		config = filterConfig;
+		
 	}
 
 	@Override
@@ -44,11 +45,14 @@ public class LoginFilter implements Filter {
 		}
 		
 		
+
 		if(session.getAttribute("user")!=null){
-			chain.doFilter(req,res);
-		}else{
-			response.sendRedirect("login");
+			chain.doFilter(req, res);
 		}
+		
+			else{
+				response.sendRedirect("/index");
+			}
 	}
 
 	@Override

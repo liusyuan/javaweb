@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netease.course.dao.UserDao">
+<!-- 
+	<select id="getUser" parameterType="String" resultMap="userMapper">
+		select p.id as personId,userName,password,nickName,usertype,
+		c.id as productId,c.price as price,title,icon,abstract,text
+		from person p left join trx t on p.id = t.personId
+		left join content c on c.id=t.contentId where userName= #{userName}
+	</select>
+
+	<resultMap id="userMapper" type="com.netease.course.meta.User">
+		<constructor>
+			<idArg column="personid" javaType="int" />
+			<arg column="usertype" javaType="int" />
+			<arg column="userName" javaType="String" />
+			<arg column="password" javaType="String" />
+			<arg column="nickName" javaType="String" />
+
+		</constructor>
+		<collection property="products" ofType="com.netease.course.meta.Product">
+			<id property="id" column="productId" />
+			<result property="price" column="price" />
+			<result property="title" column="title" />
+			<result property="image" column="icon" />
+			<result property="summary" column="abstract" />
+			<result property="detail" column="text" />
+		</collection>
+	</resultMap>
+</mapper>
+ -->
+ 	<select id="getUser" parameterType="String" resultMap="userMapper">
+		select p.id as personId,userName,password,nickName,usertype,
+		c.id as productId,title,c.price as price,time,icon
+		from person p left join trx t on p.usertype = t.personId
+		left join content c on c.id=t.contentId where userName= #{userName}
+	</select>
+
+	<resultMap id="userMapper" type="com.netease.course.meta.User">
+		<constructor>
+			<idArg column="personid" javaType="int" />
+			<arg column="usertype" javaType="int" />
+			<arg column="userName" javaType="String" />
+			<arg column="password" javaType="String" />
+			<arg column="nickName" javaType="String" />
+
+		</constructor>
+		<collection property="buyList" ofType="com.netease.course.meta.BuyList">
+			<id property="id" column="productId" />
+			<result property="title" column="title" />
+			<result property="buyPrice" column="price" />
+			<result property="buyTime" column="time" />		
+			<result property="image" column="icon" />
+		</collection>
+	</resultMap>
+</mapper>

@@ -1,11 +1,11 @@
 package com.netease.course.meta;
 
-public class Trx {
+public class Transaction {
 	private int id;
 	private int contentId;
 	private int personId;
 	private int price;
-	private int time;
+	private long time;
 	public int getId() {
 		return id;
 	}
@@ -30,11 +30,12 @@ public class Trx {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getTime() {
-		return time;
-	}
-	public void setTime(int time) {
+
+	public void setTime(long time) {
 		this.time = time;
+	}
+	public long getTime(){
+		return time;
 	}
 	
 }

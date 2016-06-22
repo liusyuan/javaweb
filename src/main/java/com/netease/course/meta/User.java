@@ -1,22 +1,52 @@
 package com.netease.course.meta;
 
+import java.util.List;
+
 public class User {
-	private int id;
-	private String username;
-	private String password;
-	private String nickName;
+	
+	private int personid;
 	private int usertype;
-	public int getId() {
-		return id;
+	private String userName;
+	private String password;
+	private String nickName;	
+	private List<BuyList> buyList;
+	
+	public User(Integer personid,Integer usertype,String userName,String password,String nickName){
+		this.personid=personid;
+		this.usertype=usertype;
+		this.userName=userName;
+		this.password=password;
+		this.nickName=nickName;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+
+
+
+	public List<BuyList> getBuyList() {
+		return buyList;
 	}
-	public String getUsername() {
-		return username;
+
+
+
+
+	public void setBuyList(List<BuyList> buyList) {
+		this.buyList = buyList;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+
+
+
+
+	public int getPersonid() {
+		return personid;
+	}
+	public void setPersonid(int personid) {
+		this.personid = personid;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getPassword() {
 		return password;
