@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.netease.course</groupId>
-	<artifactId>javaweb</artifactId>
+	<artifactId>ROOT</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -102,15 +102,15 @@
 	</dependencies>
 
     <build>
-        <finalName>javaweb</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -120,8 +120,9 @@
                 <version>2.2</version>
                 <configuration>
                     <uriEncoding>UTF-8</uriEncoding>
-                    <finalName>javaweb</finalName>
+                    <finalName>ROOT</finalName>
                     <server>tomcat</server>
+                    <path>/</path> 
                 </configuration>
             </plugin>
         </plugins>

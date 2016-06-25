@@ -5,7 +5,7 @@
 <!-- 
 	<select id="getUser" parameterType="String" resultMap="userMapper">
 		select p.id as personId,userName,password,nickName,usertype,
-		c.id as productId,c.price as price,title,icon,abstract,text
+		c.id as productId,t.price as price,title,icon,abstract,text
 		from person p left join trx t on p.id = t.personId
 		left join content c on c.id=t.contentId where userName= #{userName}
 	</select>

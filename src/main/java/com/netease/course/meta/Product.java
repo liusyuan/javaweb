@@ -5,6 +5,7 @@ package com.netease.course.meta;
 public class Product {
 	private int id;
 	private int price;
+	private int buyPrice;
 	private String title;
 	private String image;
 	private String summary;
@@ -60,5 +61,10 @@ public class Product {
 		this.isSell = isSell;
 	}
 
-	
+	public int getBuyPrice() {
+		return buyPrice;
+	}
+	public void setBuyPrice(int buyPrice) {
+		this.buyPrice = buyPrice;
+	}
 }

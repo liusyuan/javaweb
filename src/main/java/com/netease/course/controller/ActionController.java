@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.netease.course.dao.ProductDao;
-import com.netease.course.dao.TransactionDao;
-import com.netease.course.dao.UserDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.Product;
 import com.netease.course.meta.User;
-import com.netease.course.utils.getIsBuyProduct;
+import com.netease.course.service.ProductService;
+import com.netease.course.service.impl.ProductServiceImpl;
 
 @Controller
 public class ActionController {
@@ -30,21 +29,22 @@ public class ActionController {
 	private ProductDao dao;
 	
 	@Autowired
-	private getIsBuyProduct getProduct;
+	private ProductService productservice;
 
 	
 	@RequestMapping(value = "/index")
 	public String indexPage(Model map,HttpSession session) {
 
-		List<Product> productList=getProduct.setProductList();
+		List<Product> productList=productservice.getProductList();
 		map.addAttribute("productList", productList);
 		
 		return "index";
 	}
+	
 	@RequestMapping(value = "/")
 	public String index(Model map) {
 
-		List<Product> productList=getProduct.setProductList();
+		List<Product> productList=productservice.getProductList();
 		map.addAttribute("productList", productList);
 		return "index";
 	}
@@ -53,7 +53,7 @@ public class ActionController {
 	public String show(@RequestParam int id,Model map){
 		
 		Product product=dao.getProduct(id);
-		product=getProduct.set(id);
+		product=productservice.getProduct(id);
 		map.addAttribute("product",product);
 		return "show";
 	}
