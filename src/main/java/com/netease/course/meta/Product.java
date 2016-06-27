@@ -1,7 +1,6 @@
 package com.netease.course.meta;
 
 
-
 public class Product {
 	private int id;
 	private int price;
@@ -12,6 +11,7 @@ public class Product {
 	private String detail;
 	private Boolean isBuy;
 	private Boolean isSell;
+
 	public int getId() {
 		return id;
 	}
@@ -30,17 +30,16 @@ public class Product {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
+
+
+
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
-	}
-	public String getSummary() {
-		return summary;
-	}
-	public void setSummary(String summary) {
-		this.summary = summary;
 	}
 	public String getDetail() {
 		return detail;
@@ -48,6 +47,14 @@ public class Product {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+
 	public Boolean getIsBuy() {
 		return isBuy;
 	}

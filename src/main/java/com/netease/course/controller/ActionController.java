@@ -20,9 +20,10 @@ import com.netease.course.meta.BuyList;
 import com.netease.course.meta.Product;
 import com.netease.course.meta.User;
 import com.netease.course.service.ProductService;
-import com.netease.course.service.impl.ProductServiceImpl;
+
 
 @Controller
+@RequestMapping(produces="text/html;charset=UTF-8")
 public class ActionController {
 
 	@Autowired
@@ -98,11 +99,15 @@ public class ActionController {
 	public String account(HttpSession session,Model map){
 		User user=(User) session.getAttribute("user");
 		List<BuyList> buyList=user.getBuyList();
-		map.addAttribute("buyList",buyList);		
+		map.addAttribute("buyList",buyList);
 		return "account";
 	}
 	
-
+@RequestMapping("/settleAccount")
+public String settleAccount(){
+	
+	return "settleAccount";
+}
 
 
 

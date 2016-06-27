@@ -1,5 +1,8 @@
 package com.netease.course.service.impl;
 
+import java.net.HttpCookie;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,21 +35,21 @@ public class LoginServiceImpl implements LoginService {
 			User user = dao.getUser(userName);
 
 			if (user == null) {
-				return Status.loginError("用户不存在");
+				return Status.Error("用户不存在");
 			}
 
 			else if (user.getPassword().equals(password) && user.getUserName().equals(userName)) {
 					addSession(session,user);
-					return Status.OK;							
+					return Status.LOGIN_SUCCEESS;							
 			}
 
 			else {
-				return Status.loginError("密码错误");
+				return Status.Error("密码错误");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Status.loginError("未知错误");
+			return Status.Error("未知错误");
 		}
 
 	}

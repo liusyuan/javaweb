@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mysql.jdbc.Blob;
 import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.TransactionDao;
 import com.netease.course.meta.Product;
 import com.netease.course.meta.Transaction;
 import com.netease.course.service.ProductService;
+import com.netease.course.utils.ConvertBlobTypeHandler;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -27,9 +29,11 @@ public class ProductServiceImpl implements ProductService{
 				product.setIsBuy(true);
 				product.setIsSell(true);
 				product.setBuyPrice(trx.getPrice());
+
 			} else {
 				product.setIsBuy(false);
 				product.setIsSell(false);
+
 			}
 			}
 			return product;

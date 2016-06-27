@@ -51,7 +51,7 @@
 			<result property="title" column="title" />
 			<result property="buyPrice" column="price" />
 			<result property="buyTime" column="time" />		
-			<result property="image" column="icon" />
+			<result property="image" column="icon" javaType="String"/>
 		</collection>
 	</resultMap>
 </mapper>

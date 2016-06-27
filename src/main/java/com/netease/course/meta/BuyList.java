@@ -1,5 +1,6 @@
 package com.netease.course.meta;
 
+
 public class BuyList {
 	private int id;
 	private String title;

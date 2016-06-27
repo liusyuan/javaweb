@@ -15,7 +15,7 @@ public interface ProductDao {
 	@Results({
 		@Result(property="image",column="icon"),
 		@Result(property="summary",column="abstract"),
-		@Result(property="detail",column="text"),
+		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="id",column="id"),
 		@Result(property="price",column="price"),
 		@Result(property="title",column="title")		
@@ -26,7 +26,7 @@ public interface ProductDao {
 	@Results({
 		@Result(property="image",column="icon"),
 		@Result(property="summary",column="abstract"),
-		@Result(property="detail",column="text"),
+		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="id",column="id"),
 		@Result(property="price",column="price"),
 		@Result(property="title",column="title")		
@@ -34,6 +34,14 @@ public interface ProductDao {
 	@Select("select * from content")
 	List<Product> getProductList();
 	
+	@Results({
+		@Result(property="image",column="icon"),
+		@Result(property="summary",column="abstract"),
+		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
+		@Result(property="id",column="id"),
+		@Result(property="price",column="price"),
+		@Result(property="title",column="title")		
+	})
 	@Insert("insert into content (id,price,title,icon,abstract,text) "
 			+ "values(#{id},#{price},#{title},#{image},#{summary},#{detail})")
 	public void publishProduct(Product product);
