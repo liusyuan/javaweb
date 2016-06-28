@@ -32,7 +32,7 @@ public interface ProductDao {
 		@Result(property="title",column="title")		
 	})
 	@Select("select * from content")
-	List<Product> getProductList();
+	public List<Product> getProductList();
 	
 	@Results({
 		@Result(property="image",column="icon"),

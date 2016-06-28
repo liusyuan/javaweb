@@ -3,12 +3,15 @@ package com.netease.course.aspect;
 
 
 
+import java.net.HttpCookie;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.netease.course.meta.User;
@@ -20,6 +23,7 @@ public class LogAspect {
 	private static final Logger log=Logger.getLogger(LogAspect.class);
 	@Autowired
 	private HttpSession session;
+
 	
 	@AfterReturning(pointcut="execution(* com.netease.course.controller.ApiController.*(..))",returning="status")		
 	public void afterReturn(Status status){
@@ -30,6 +34,11 @@ public class LogAspect {
 		}else{
 			log.info(status.getMessage());
 		}
+	}
+	@AfterReturning(pointcut="execution(* com.netease.course.controller.LoginController.logout(..))")
+	public void logout(){
+		session.invalidate();
+		log.info("退出登陆");
 	}
 	
 	@AfterThrowing(pointcut="execution(* com.netease.course.**.*(..))",throwing="e")

@@ -63,6 +63,7 @@ public class ActionController {
 	public String publicSubmit(Product product) {
 		try {
 			dao.publishProduct(product);
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();

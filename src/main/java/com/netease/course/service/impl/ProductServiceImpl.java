@@ -23,10 +23,13 @@ public class ProductServiceImpl implements ProductService {
 			Product product = productDao.getProduct(id);
 			if (product != null) {
 				BuyList trx = trxDao.getOrder(product.getId());
-				if (trx != null) {
+				if (trx.getNumber() != 0) {
 					product.setIsBuy(true);
 					product.setIsSell(true);
 					product.setBuyPrice(trx.getBuyPrice());
+				}else{
+					product.setIsBuy(false);
+					product.setIsSell(false);
 				}
 			}
 			return product;
@@ -42,7 +45,8 @@ public class ProductServiceImpl implements ProductService {
 			for (Product product : productList) {
 				if (product != null) {
 
-					if (trxDao.getOrder(product.getId()) != null) {
+					if (trxDao.getOrder(product.getId()).getNumber() != 0) {
+						System.out.println(product.getId());
 						product.setIsBuy(true);
 						product.setIsSell(true);
 					} else {
