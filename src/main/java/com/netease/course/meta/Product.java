@@ -3,7 +3,7 @@ package com.netease.course.meta;
 
 public class Product {
 	private int id;
-	private int price;
+	private int price;  
 	private int buyPrice;
 	private String title;
 	private String image;

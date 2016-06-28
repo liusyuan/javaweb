@@ -7,14 +7,28 @@ public class BuyList {
 	private int buyPrice;
 	private long buyTime;
 	private String image;
-	private int buyNum;
+	private int number;
 	private int total;
+	private int personId;
+	private int buyNum;
 
 	public int getBuyNum() {
 		return buyNum;
 	}
 	public void setBuyNum(int buyNum) {
 		this.buyNum = buyNum;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	public int getPersonId() {
+		return personId;
+	}
+	public void setPersonId(int personId) {
+		this.personId = personId;
 	}
 	public int getTotal() {
 		return total;
@@ -40,7 +54,7 @@ public class BuyList {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Number getBuyPrice() {
+	public int getBuyPrice() {
 		return buyPrice;
 	}
 	public void setBuyPrice(int buyPrice) {

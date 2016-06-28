@@ -17,17 +17,18 @@
     <table class="m-table m-table-row n-table g-b3">
         <colgroup><col class="img"/><col/><col class="time"/><col/><col class="num"/><col/><col class="price"/><col/></colgroup>
         <thead>
-            <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th></tr>
+            <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>单价</th><th>实付款</th></tr>
         </thead>
         <tbody>
             <#list buyList as x>
-            <#assign total = total + x.buyPrice>
+            <#assign total = total + x.buyPrice*x.buyNum>
             <tr>
                 <td><a href="/show?id=${x.id}"><img src="${x.image}" alt=""></a></td>
                 <td><h4><a href="/show?id=${x.id}">${x.title}</a></h4></td>
                 <td><span class="v-time">${x.buyTime?number_to_datetime?string("yyyy-MM-dd HH:mm")}</span></td>
                 <td><span class="v-num">${x.buyNum}</span></td>
                 <td><span class="v-unit">¥</span><span class="value">${x.buyPrice}</span></td>
+                <td><span class="v-unit">¥</span><span class="value">${x.total}</span></td>
             </tr>
             </#list>
         </tbody>

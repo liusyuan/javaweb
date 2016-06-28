@@ -1,8 +1,5 @@
 package com.netease.course.service.impl;
 
-import java.net.HttpCookie;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;

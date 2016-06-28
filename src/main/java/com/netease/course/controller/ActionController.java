@@ -19,6 +19,7 @@ import com.netease.course.dao.ProductDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.Product;
 import com.netease.course.meta.User;
+import com.netease.course.service.BuyListService;
 import com.netease.course.service.ProductService;
 
 
@@ -32,6 +33,8 @@ public class ActionController {
 	@Autowired
 	private ProductService productservice;
 
+	@Autowired
+	private BuyListService buyListService;
 	
 	@RequestMapping(value = {"/index","/"})
 	public String indexPage(Model map,HttpSession session) {
@@ -89,7 +92,7 @@ public class ActionController {
 	@RequestMapping("/account")
 	public String account(HttpSession session,Model map){
 		User user=(User) session.getAttribute("user");
-		List<BuyList> buyList=user.getBuyList();
+		List<BuyList> buyList=buyListService.getBuyList(user);
 		map.addAttribute("buyList",buyList);
 		return "account";
 	}
