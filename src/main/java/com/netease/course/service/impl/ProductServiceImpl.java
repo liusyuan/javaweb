@@ -46,7 +46,6 @@ public class ProductServiceImpl implements ProductService {
 				if (product != null) {
 
 					if (trxDao.getOrder(product.getId()).getNumber() != 0) {
-						System.out.println(product.getId());
 						product.setIsBuy(true);
 						product.setIsSell(true);
 					} else {

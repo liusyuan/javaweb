@@ -63,5 +63,13 @@ public class ApiController {
 		return Status.OK;
 	}
 	
+	@RequestMapping(value="/upload")
+	@ResponseBody
+	public Status upload(){
+
+		
+		return Status.OK;
+	}
+	
 	
 }
