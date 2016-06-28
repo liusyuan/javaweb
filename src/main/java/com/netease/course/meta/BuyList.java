@@ -7,8 +7,21 @@ public class BuyList {
 	private int buyPrice;
 	private long buyTime;
 	private String image;
-	
+	private int buyNum;
+	private int total;
 
+	public int getBuyNum() {
+		return buyNum;
+	}
+	public void setBuyNum(int buyNum) {
+		this.buyNum = buyNum;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
 	public int getId() {
 		return id;
 	}

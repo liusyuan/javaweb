@@ -11,7 +11,20 @@ public class Product {
 	private String detail;
 	private Boolean isBuy;
 	private Boolean isSell;
-
+	private int buyNum;
+	private int saleNum;
+	public int getBuyNum() {
+		return buyNum;
+	}
+	public void setBuyNum(int buyNum) {
+		this.buyNum = buyNum;
+	}
+	public int getSaleNum() {
+		return saleNum;
+	}
+	public void setSaleNum(int saleNum) {
+		this.saleNum = saleNum;
+	}
 	public int getId() {
 		return id;
 	}

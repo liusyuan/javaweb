@@ -33,7 +33,7 @@ public class ActionController {
 	private ProductService productservice;
 
 	
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = {"/index","/"})
 	public String indexPage(Model map,HttpSession session) {
 
 		List<Product> productList=productservice.getProductList();
@@ -42,19 +42,10 @@ public class ActionController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/")
-	public String index(Model map) {
-
-		List<Product> productList=productservice.getProductList();
-		map.addAttribute("productList", productList);
-		return "index";
-	}
-	
 	@RequestMapping("/show")
 	public String show(@RequestParam int id,Model map){
 		
-		Product product=dao.getProduct(id);
-		product=productservice.getProduct(id);
+		Product product=productservice.getProduct(id);
 		map.addAttribute("product",product);
 		return "show";
 	}
