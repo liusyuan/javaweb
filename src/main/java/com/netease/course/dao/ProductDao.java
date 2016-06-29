@@ -14,7 +14,7 @@ import com.netease.course.meta.Product;
 
 public interface ProductDao {
 	@Results({
-		@Result(property="image",column="icon"),
+		@Result(property="image",column="icon",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="summary",column="abstract"),
 		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="id",column="id"),
@@ -25,7 +25,7 @@ public interface ProductDao {
 	public Product getProduct(int id);
 	
 	@Results({
-		@Result(property="image",column="icon"),
+		@Result(property="image",column="icon",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="summary",column="abstract"),
 		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="id",column="id"),
@@ -36,7 +36,7 @@ public interface ProductDao {
 	public List<Product> getProductList();
 
 	@Results({
-		@Result(property="image",column="icon"),
+		@Result(property="image",column="icon",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="summary",column="abstract"),
 		@Result(property="detail",column="text",typeHandler=com.netease.course.utils.ConvertBlobTypeHandler.class),
 		@Result(property="id",column="id"),
