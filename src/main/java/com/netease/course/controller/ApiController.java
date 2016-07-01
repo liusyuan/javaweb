@@ -3,7 +3,8 @@ package com.netease.course.controller;
 import java.io.File;
 
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import com.netease.course.dao.UserDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.User;
 import com.netease.course.service.LoginService;
+import com.netease.course.service.PictureService;
 import com.netease.course.service.BuyListService;
 import com.netease.course.utils.Status;
 
@@ -40,6 +42,8 @@ public class ApiController {
 	private BuyListService trx;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private PictureService picService;
 	
 	@RequestMapping(value = "/login")
 	@ResponseBody
@@ -74,16 +78,24 @@ public class ApiController {
 	@RequestMapping(value="/upload")
 	@ResponseBody
 	public Model upload(@RequestPart("file") MultipartFile pic,Model map,HttpServletRequest req) throws IOException{
-		String path=req.getServletContext().getRealPath("/");
-
-		pic.transferTo(new File(path+"image\\"+pic.getOriginalFilename()));
+		String realPath=req.getServletContext().getRealPath("/");		
+		String path=picService.save(pic, realPath);
 
 		map.addAttribute("code",200);
 		map.addAttribute("message","上传成功");
-		map.addAttribute("result","/image/"+pic.getOriginalFilename());
+		map.addAttribute("result",path);
 
 		return map;
 	}
+
 	
-	
+	public static void main(String[] args) {
+		String path="/image";
+		File file=new File(path);
+		if  (!file .exists()  && !file .isDirectory())      
+		{       
+		    System.out.println("//不存在");  
+		    file .mkdir();    
+		} 
+	}
 }
