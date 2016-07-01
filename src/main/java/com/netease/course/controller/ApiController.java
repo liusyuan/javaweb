@@ -3,8 +3,6 @@ package com.netease.course.controller;
 import java.io.File;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,8 +53,10 @@ public class ApiController {
 	@RequestMapping(value="/buy")
 	@ResponseBody
 	public Status buy(@RequestBody List<BuyList> buyList,HttpSession session){
-		System.out.println("doBuy");
+		
 		trx.buy(buyList);
+		
+
 		User user=(User) session.getAttribute("user");
 		User newUser=userDao.getUser(user.getUserName());
 		session.setAttribute("user",newUser);
@@ -82,7 +82,7 @@ public class ApiController {
 		String path=picService.save(pic, realPath);
 
 		map.addAttribute("code",200);
-		map.addAttribute("message","上传成功");
+		map.addAttribute("message","success");
 		map.addAttribute("result",path);
 
 		return map;
@@ -93,8 +93,7 @@ public class ApiController {
 		String path="/image";
 		File file=new File(path);
 		if  (!file .exists()  && !file .isDirectory())      
-		{       
-		    System.out.println("//不存在");  
+		{        
 		    file .mkdir();    
 		} 
 	}

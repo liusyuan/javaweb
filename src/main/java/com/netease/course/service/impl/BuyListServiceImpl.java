@@ -28,12 +28,15 @@ public class BuyListServiceImpl implements BuyListService {
 		System.out.println("doBuylist");
 		try {
 			for (BuyList order : buyList) {
-
+				int contentId=order.getId();
+				int buyPrice =productDao.getProduct(contentId).getPrice();
 				for (int i = order.getNumber(); i > 0;i--) {
-					System.out.println("doBuy");
+					
+					
 					order.setPersonId(0);
 					Date date = new Date();
 					order.setBuyTime(date.getTime());
+					order.setBuyPrice(buyPrice);
 					trxDao.trx(order);
 				}
 			}
