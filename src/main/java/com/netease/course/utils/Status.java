@@ -16,7 +16,6 @@ public class Status {
 		
 	}
 	
-	public static Status OK=new Status(200,"success",true);
 	public static Status LOGIN_SUCCEESS=new Status(200,"登陆成功",true);
 	/**
 	 * 请求错误
@@ -26,7 +25,14 @@ public class Status {
 	public static Status Error(String msg){
 		return new Status(401,msg,false);
 	}
-
+	/**
+	 * 请求成功
+	 * @param msg 成功信息
+	 * @return
+	 */
+	public static Status Ok(String msg){
+		return new Status(200,msg,true);
+	}
 
 	public int getCode() {
 		return code;

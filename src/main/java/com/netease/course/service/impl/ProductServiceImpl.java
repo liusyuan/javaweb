@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.netease.course.service.ProductService;
 import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.TransactionDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.Product;
-import com.netease.course.service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 					product.setIsBuy(true);
 					product.setIsSell(true);
 					product.setBuyPrice(trx.getBuyPrice());
-				}else{
+				} else {
 					product.setIsBuy(false);
 					product.setIsSell(false);
 				}
@@ -59,5 +59,19 @@ public class ProductServiceImpl implements ProductService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		boolean tab=true;
+		try {
+			productDao.deleteProduct(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			tab=false;
+			throw e;
+		}		
+		return tab;
 	}
 }

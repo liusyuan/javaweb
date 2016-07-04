@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import com.netease.course.dao.ProductDao;
-import com.netease.course.meta.BuyList;
-import com.netease.course.meta.Product;
 import com.netease.course.meta.User;
 import com.netease.course.service.BuyListService;
 import com.netease.course.service.ProductService;
+import com.netease.course.dao.ProductDao;
+import com.netease.course.meta.BuyList;
+import com.netease.course.meta.Product;
 
 
 @Controller
@@ -36,7 +35,7 @@ public class ActionController {
 	@Autowired
 	private BuyListService buyListService;
 	
-	@RequestMapping(value = {"/index","/"})
+	@RequestMapping(value = {"/index","/","/undefined"})
 	public String indexPage(Model map,HttpSession session) {
 
 		List<Product> productList=productservice.getProductList();
@@ -62,6 +61,7 @@ public class ActionController {
 	@RequestMapping(value = "/publicSubmit", method = RequestMethod.POST)
 	public String publicSubmit(Product product) {
 		try {
+			
 			dao.publishProduct(product);
 
 			

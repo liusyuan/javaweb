@@ -1,4 +1,4 @@
-package com.netease.course.service.impl;
+package com.netease.course.test.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.netease.course.meta.User;
-import com.netease.course.service.BuyListService;
 import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.TransactionDao;
 import com.netease.course.meta.BuyList;
-
+import com.netease.course.meta.User;
+import com.netease.course.test.service.TestBuyListService;
 
 @Service
 @Transactional
-public class BuyListServiceImpl implements BuyListService {
+public class TestBuyListServiceImpl implements TestBuyListService {
 
 	@Autowired
 	TransactionDao trxDao;
@@ -26,31 +25,26 @@ public class BuyListServiceImpl implements BuyListService {
 	
 	@Override
 	public boolean buy(List<BuyList> buyList) {
-		boolean tab=true;
+
 		try {
-			for (BuyList order : buyList) {
-				System.out.println("执行了1");	
-			
+			for (BuyList order : buyList) {			
 				int contentId=order.getId();
 				int buyPrice =productDao.getProduct(contentId).getPrice();
-				for (int i = order.getNumber(); i > 0;i--) {
 				
 					order.setPersonId(0);
 					Date date = new Date();
 					order.setBuyTime(date.getTime());
 					order.setBuyPrice(buyPrice);
 					trxDao.trx(order);
-					
-				}
+					throw new RuntimeException();
 			}
 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			tab=false;
-			throw e;
+			throw e;//如果不抛出异常，事务将不会生效
 		}
-		return tab;
+		return true;
 	}
 
 	@Transactional(readOnly=true)

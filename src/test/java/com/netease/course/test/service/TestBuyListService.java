@@ -1,12 +1,11 @@
-package com.netease.course.service;
+package com.netease.course.test.service;
 
 import java.util.List;
 
-import com.netease.course.meta.User;
 import com.netease.course.meta.BuyList;
+import com.netease.course.meta.User;
 
-public interface BuyListService {
-
+public interface TestBuyListService {
 	public boolean buy(List<BuyList> buyList);
 	public List<BuyList> getBuyList(User user);
 }

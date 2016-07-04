@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.netease.course.meta.User;
 import com.netease.course.utils.Status;
 
+/*
+ * aop日志管理
+ */
 
 @Aspect
 public class LogAspect {
@@ -30,9 +33,12 @@ public class LogAspect {
 			log.info(status.getMessage());
 		}
 	}
+	
+	/*
+	 * 检测用户退出，清理session,并输出用户退出登陆信息
+	 */
 	@AfterReturning(pointcut="execution(* com.netease.course.controller.LoginController.logout(..))")
 	public void logout(){
-		session.invalidate();
 		log.info("退出登陆");
 	}
 	

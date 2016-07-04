@@ -1,7 +1,5 @@
 package com.netease.course.controller;
 
-import java.io.File;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -19,82 +17,74 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.netease.course.meta.User;
+import com.netease.course.service.LoginService;
+import com.netease.course.service.ProductService;
 import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.UserDao;
 import com.netease.course.meta.BuyList;
-import com.netease.course.meta.User;
-import com.netease.course.service.LoginService;
-import com.netease.course.service.PictureService;
 import com.netease.course.service.BuyListService;
+import com.netease.course.utils.PictureUtil;
 import com.netease.course.utils.Status;
 
 @Controller
-@RequestMapping(value="/api",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
+@RequestMapping(value = "/api", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 public class ApiController {
-	
+
 	@Autowired
 	private LoginService login;
 	@Autowired
-	private ProductDao dao;
+	private ProductService productService;
 	@Autowired
 	private BuyListService trx;
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private PictureService picService;
-	
+
 	@RequestMapping(value = "/login")
 	@ResponseBody
-	public Status doLogin(@RequestParam String userName, @RequestParam String password) {
-		
-		return login.doLogin(userName, password);
-	}
-	
-	@RequestMapping(value="/buy")
-	@ResponseBody
-	public Status buy(@RequestBody List<BuyList> buyList,HttpSession session){
-		
-		trx.buy(buyList);
-		
+	public Status doLogin(HttpServletRequest req) {
 
-		User user=(User) session.getAttribute("user");
-		User newUser=userDao.getUser(user.getUserName());
-		session.setAttribute("user",newUser);
-		return Status.OK;
+		return login.doLogin(req);
 	}
-	
-	@RequestMapping(value="/delete")
+
+	@RequestMapping(value = "/buy")
 	@ResponseBody
-	public Status delete(@RequestParam int id){
-		try{
-			dao.deleteProduct(id);
-		}catch(Exception e){
-			e.printStackTrace();
+	public Status buy(@RequestBody List<BuyList> buyList, HttpSession session) {
+
+		if (trx.buy(buyList)) {
+			User user = (User) session.getAttribute("user");
+			User newUser = userDao.getUser(user.getUserName());
+			session.setAttribute("user", newUser);
+			return Status.Ok("购买成功");
+		} else {
+			return Status.Error("购买失败");
 		}
-		
-		return Status.OK;
-	}
-	
-	@RequestMapping(value="/upload")
-	@ResponseBody
-	public Model upload(@RequestPart("file") MultipartFile pic,Model map,HttpServletRequest req) throws IOException{
-		String realPath=req.getServletContext().getRealPath("/");		
-		String path=picService.save(pic, realPath);
 
-		map.addAttribute("code",200);
-		map.addAttribute("message","success");
-		map.addAttribute("result",path);
+	}
+
+	@RequestMapping(value = "/delete")
+	@ResponseBody
+	public Status delete(@RequestParam int id) {
+
+		if (productService.delete(id)) {
+			return Status.Ok("删除成功");
+		} else {
+			return Status.Error("删除失败");
+		}
+
+	}
+
+	@RequestMapping(value = "/upload")
+	@ResponseBody
+	public Model upload(@RequestPart("file") MultipartFile pic, Model map, HttpServletRequest req) throws IOException {
+		String realPath = req.getServletContext().getRealPath("/");
+		String path = PictureUtil.save(pic, realPath);
+
+		map.addAttribute("code", 200);
+		map.addAttribute("message", "success");
+		map.addAttribute("result", path);
 
 		return map;
 	}
 
-	
-	public static void main(String[] args) {
-		String path="/image";
-		File file=new File(path);
-		if  (!file .exists()  && !file .isDirectory())      
-		{        
-		    file .mkdir();    
-		} 
-	}
 }

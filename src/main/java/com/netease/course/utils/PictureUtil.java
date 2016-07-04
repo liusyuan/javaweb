@@ -1,4 +1,4 @@
-package com.netease.course.service.impl;
+package com.netease.course.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,13 +10,12 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.netease.course.service.PictureService;
 
 @Service
-public class PictureServiceImpl implements PictureService {
+public class PictureUtil {
 
-	@Override
-	public String save(MultipartFile pic,String path) throws IllegalStateException, IOException {
+
+	public static String save(MultipartFile pic,String path) throws IllegalStateException, IOException {
 		String picName=pic.getOriginalFilename();
 		picName=getNewName(picName);
 		String savePath=path+"image/";
@@ -29,7 +28,7 @@ public class PictureServiceImpl implements PictureService {
 		return "/image/"+picName;
 	}	
 
-	public String getNewName(String oldName) {
+	public static String getNewName(String oldName) {
 		String picType=oldName.substring(oldName.lastIndexOf("."));
 		DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String format = df.format(new Date());		

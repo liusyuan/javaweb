@@ -1,32 +1,28 @@
 package com.netease.course.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.netease.course.dao.UserDao;
 import com.netease.course.meta.User;
 import com.netease.course.service.LoginService;
+import com.netease.course.dao.UserDao;
 import com.netease.course.utils.Status;
-
-
 
 @Service
 public class LoginServiceImpl implements LoginService {
-	
-	@Autowired
-	private HttpSession session;
-	
-	
+
 	@Autowired
 	private UserDao dao;
 
 	@Override
-	public Status doLogin(String userName, String password) {
-		
-		
+	public Status doLogin(HttpServletRequest req) {
+		String userName = req.getParameter("userName");
+		String password = req.getParameter("password");
+		HttpSession session = req.getSession();
 		try {
 
 			User user = dao.getUser(userName);
@@ -36,8 +32,9 @@ public class LoginServiceImpl implements LoginService {
 			}
 
 			else if (user.getPassword().equals(password) && user.getUserName().equals(userName)) {
-					addSession(session,user);
-					return Status.LOGIN_SUCCEESS;							
+
+				session.setAttribute("user", user);
+				return Status.LOGIN_SUCCEESS;
 			}
 
 			else {
@@ -50,11 +47,6 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 	}
-	
-	public void addSession(HttpSession session,User user){
 
-		session.setAttribute("user", user);
-		
-	}
 
 }

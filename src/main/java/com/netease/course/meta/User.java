@@ -2,6 +2,8 @@ package com.netease.course.meta;
 
 import java.util.List;
 
+import com.netease.course.meta.BuyList;
+
 public class User {
 	
 	private int personid;

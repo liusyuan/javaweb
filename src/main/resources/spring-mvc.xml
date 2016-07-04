@@ -48,6 +48,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/account" />
 			<mvc:mapping path="api/buy" />
+			<mvc:mapping path="/settleAccount"/>
 			<bean class="com.netease.course.interceptor.SellerInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
