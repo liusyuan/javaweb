@@ -23,7 +23,7 @@ public class TestGetUser {
 		private UserDao dao;
 		
 		@Test
-		public void getUser(){
+		public void getUser()throws Exception{
 			User user=dao.getUser("buyer");
 			System.out.println(user.getUserName()+": "+user.getUsertype()+" "+user.getPassword());
 		}

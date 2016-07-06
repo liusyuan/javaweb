@@ -24,7 +24,7 @@ public class TestProduct {
 	
 	
 	@Test
-	public void testGetProducts(){
+	public void testGetProducts()throws Exception{
 		List<Product> products=productService.getProductList();
 		System.out.println("testGetProducts:"+products.get(0).getTitle());
 	}

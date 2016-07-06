@@ -7,6 +7,6 @@ import com.netease.course.meta.BuyList;
 
 public interface BuyListService {
 
-	public boolean buy(List<BuyList> buyList);
-	public List<BuyList> getBuyList(User user);
+	public void buy(List<BuyList> buyList) throws Exception;
+	public List<BuyList> getBuyList(User user) throws Exception;
 }

@@ -23,7 +23,7 @@
 	<mvc:resources location="/" mapping="/NoPermissionPage.html" />
 	<mvc:resources location="/" mapping="/favicon.ico" />
 	<mvc:resources location="/image/" mapping="/image/**"/>
-	<mvc:resources location="/" mapping="/800b58235ad62de5f65992b99c33f025.txt"/>
+
 	
 	<mvc:annotation-driven />
 	
@@ -35,7 +35,6 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/" />
-			<mvc:exclude-mapping path="/800b58235ad62de5f65992b99c33f025.txt"/>
 			<mvc:exclude-mapping path="/index" />
 			<mvc:exclude-mapping path="/login" />
 			<mvc:exclude-mapping path="/api/login" />

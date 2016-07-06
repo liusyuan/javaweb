@@ -20,11 +20,11 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public Status doLogin(HttpServletRequest req) {
-		String userName = req.getParameter("userName");
-		String password = req.getParameter("password");
-		HttpSession session = req.getSession();
-		try {
 
+
+			String userName = req.getParameter("userName");
+			String password = req.getParameter("password");
+			HttpSession session = req.getSession();
 			User user = dao.getUser(userName);
 
 			if (user == null) {
@@ -41,10 +41,7 @@ public class LoginServiceImpl implements LoginService {
 				return Status.Error("密码错误");
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Status.Error("未知错误");
-		}
+
 
 	}
 

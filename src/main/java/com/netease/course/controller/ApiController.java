@@ -1,6 +1,5 @@
 package com.netease.course.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.netease.course.meta.User;
 import com.netease.course.service.LoginService;
 import com.netease.course.service.ProductService;
-import com.netease.course.dao.UserDao;
+import com.netease.course.service.UserService;
 import com.netease.course.meta.BuyList;
 import com.netease.course.service.BuyListService;
 import com.netease.course.utils.PictureUtil;
@@ -31,31 +30,40 @@ import com.netease.course.utils.Status;
 public class ApiController {
 
 	@Autowired
-	private LoginService login;
+	private LoginService loginService;
 	@Autowired
 	private ProductService productService;
 	@Autowired
 	private BuyListService trx;
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 
 	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Status doLogin(HttpServletRequest req) {
-
-		return login.doLogin(req);
+		try{
+			Status status=loginService.doLogin(req);
+			return status;
+		}catch(Exception e){
+			e.printStackTrace();
+			return Status.Error("未知错误");
+		}
+		
 	}
 
 	@RequestMapping(value = "/buy")
 	@ResponseBody
-	public Status buy(@RequestBody List<BuyList> buyList, HttpSession session) {
+	public Status buy(@RequestBody List<BuyList> buyList, HttpSession session) throws Exception {
 
-		if (trx.buy(buyList)) {
+		try {
+			
+			trx.buy(buyList);
 			User user = (User) session.getAttribute("user");
-			User newUser = userDao.getUser(user.getUserName());
+			User newUser = userService.getUser(user.getUserName());
 			session.setAttribute("user", newUser);
 			return Status.Ok("购买成功");
-		} else {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Status.Error("购买失败");
 		}
 
@@ -65,9 +73,11 @@ public class ApiController {
 	@ResponseBody
 	public Status delete(@RequestParam int id) {
 
-		if (productService.delete(id)) {
+		try {
+			productService.delete(id);
 			return Status.Ok("删除成功");
-		} else {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Status.Error("删除失败");
 		}
 
@@ -75,17 +85,29 @@ public class ApiController {
 
 	@RequestMapping(value = "/upload")
 	@ResponseBody
-	public Model upload(@RequestPart("file") MultipartFile pic, Model map, HttpServletRequest req) throws IOException {
-		String realPath = req.getServletContext().getRealPath("/");
-		String path = PictureUtil.save(pic, realPath);
-		
-		String picPath=req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+path;
-		
-		map.addAttribute("code", 200);
-		map.addAttribute("message", "success");
-		map.addAttribute("result", picPath);
+	public Model upload(@RequestPart("file") MultipartFile pic, Model map, HttpServletRequest req) {
+		try {
+			String realPath = req.getServletContext().getRealPath("/");
 
-		return map;
+			String path = PictureUtil.save(pic, realPath);
+
+			String picPath = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + path;
+
+			map.addAttribute("code", 200);
+			map.addAttribute("message", "upload success");
+			map.addAttribute("result", picPath);
+			
+			return map;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.addAttribute("code", 500);
+			map.addAttribute("message", "upload false");
+			map.addAttribute("result", null);
+			
+			return map;
+
+		}
 	}
 
 }

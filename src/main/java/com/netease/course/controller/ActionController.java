@@ -1,7 +1,5 @@
 package com.netease.course.controller;
 
-
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,39 +15,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.netease.course.meta.User;
 import com.netease.course.service.BuyListService;
 import com.netease.course.service.ProductService;
-import com.netease.course.dao.ProductDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.Product;
 
-
 @Controller
-@RequestMapping(produces="text/html;charset=UTF-8")
+@RequestMapping(produces = "text/html;charset=UTF-8")
 public class ActionController {
 
 	@Autowired
-	private ProductDao dao;
-	
-	@Autowired
-	private ProductService productservice;
+	private ProductService productService;
 
 	@Autowired
 	private BuyListService buyListService;
-	
-	//undefined路径是为了解决在Firefox下购物车页点击退出按钮进入到undefined路径的bug
-	@RequestMapping(value = {"/index","/","/undefined"})
-	public String indexPage(Model map,HttpSession session) {
 
-		List<Product> productList=productservice.getProductList();
+	// undefined路径是为了解决在Firefox下购物车页点击退出按钮进入到undefined路径的bug
+	@RequestMapping(value = { "/index", "/", "/undefined" })
+	public String indexPage(Model map, HttpSession session) {
+
+		List<Product> productList = productService.getProductList();
 		map.addAttribute("productList", productList);
-		
+
 		return "index";
 	}
-	
+
 	@RequestMapping("/show")
-	public String show(@RequestParam int id,Model map){
-		
-		Product product=productservice.getProduct(id);
-		map.addAttribute("product",product);
+	public String show(@RequestParam int id, Model map) {
+
+		Product product = productService.getProduct(id);
+		map.addAttribute("product", product);
 		return "show";
 	}
 
@@ -60,51 +53,59 @@ public class ActionController {
 	}
 
 	@RequestMapping(value = "/publicSubmit", method = RequestMethod.POST)
-	public String publicSubmit(Product product) {
+	public String publicSubmit(Product product,Model map) {
 		try {
 			
-			dao.publishProduct(product);
+			productService.publish(product);
 
-			
 		} catch (Exception e) {
+			map.addAttribute("product",null);
 			e.printStackTrace();
 		}
 		return "publicSubmit";
 	}
 
 	@RequestMapping("/edit")
-	public String edit(@RequestParam int id,Model map) {
-		Product product=dao.getProduct(id);
-		map.addAttribute("product",product);
+	public String edit(@RequestParam int id, Model map) {
+		Product product = productService.getProduct(id);
+		map.addAttribute("product", product);
 		return "edit";
 	}
 
 	@RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
-	public String editSumbmit(Product product) {
-		
+	public String editSumbmit(Product product,Model map) {
+
 		try {
-			dao.updateProduct(product);
-			
+			productService.update(product);
+
 		} catch (Exception e) {
+			
+			map.addAttribute("product",null);
 			e.printStackTrace();
 		}
 		return "editSubmit";
 	}
-	
+
 	@RequestMapping("/account")
-	public String account(HttpSession session,Model map){
-		User user=(User) session.getAttribute("user");
-		List<BuyList> buyList=buyListService.getBuyList(user);
-		map.addAttribute("buyList",buyList);
+	public String account(HttpSession session, Model map) {
+
+		try {
+			User user = (User) session.getAttribute("user");
+			if (user != null) {
+				List<BuyList> buyList = buyListService.getBuyList(user);
+				map.addAttribute("buyList", buyList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "account";
 	}
-	
-@RequestMapping("/settleAccount")
-public String settleAccount(){
-	
-	return "settleAccount";
-}
 
+	@RequestMapping("/settleAccount")
+	public String settleAccount() {
 
+		return "settleAccount";
+	}
 
 }

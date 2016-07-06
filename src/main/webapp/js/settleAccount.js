@@ -8,7 +8,9 @@
 	var $ = function(id){
 		return document.getElementById(id);
 	}
-	
+	$('back').onclick = function(){
+		location.href = window.history.back();
+	}
 	var str = "<tr>" + 
 			  "<th>" + '内容名称'  + "</th>"+ 
 			  "<th>" + '数量' + "</th>" +
@@ -94,7 +96,5 @@
 			}).show();
 			return;
 	};
-	$('back').onclick = function(){
-		location.href = window.history.back();
-	}
+
 })(window,document);
