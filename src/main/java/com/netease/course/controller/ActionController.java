@@ -35,6 +35,7 @@ public class ActionController {
 	@Autowired
 	private BuyListService buyListService;
 	
+	//undefined路径是为了解决在Firefox下购物车页点击退出按钮进入到undefined路径的bug
 	@RequestMapping(value = {"/index","/","/undefined"})
 	public String indexPage(Model map,HttpSession session) {
 

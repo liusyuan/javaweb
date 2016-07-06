@@ -23,9 +23,11 @@
 	<mvc:resources location="/" mapping="/NoPermissionPage.html" />
 	<mvc:resources location="/" mapping="/favicon.ico" />
 	<mvc:resources location="/image/" mapping="/image/**"/>
+	<mvc:resources location="/" mapping="/800b58235ad62de5f65992b99c33f025.txt"/>
+	
 	<mvc:annotation-driven />
 	
-	<aop:aspectj-autoproxy />
+	<aop:aspectj-autoproxy/>
 	
 	<bean id="logAspect" class="com.netease.course.aspect.LogAspect" />
   
@@ -33,6 +35,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/" />
+			<mvc:exclude-mapping path="/800b58235ad62de5f65992b99c33f025.txt"/>
 			<mvc:exclude-mapping path="/index" />
 			<mvc:exclude-mapping path="/login" />
 			<mvc:exclude-mapping path="/api/login" />
@@ -71,10 +74,13 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- 文件上传解析器，限制大小1MB -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10485760" />
 	</bean>
+	
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="viewResolvers">

@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.netease.course.meta.User;
 import com.netease.course.service.LoginService;
 import com.netease.course.service.ProductService;
-import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.UserDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.service.BuyListService;
@@ -79,10 +78,12 @@ public class ApiController {
 	public Model upload(@RequestPart("file") MultipartFile pic, Model map, HttpServletRequest req) throws IOException {
 		String realPath = req.getServletContext().getRealPath("/");
 		String path = PictureUtil.save(pic, realPath);
-
+		
+		String picPath=req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+path;
+		
 		map.addAttribute("code", 200);
 		map.addAttribute("message", "success");
-		map.addAttribute("result", path);
+		map.addAttribute("result", picPath);
 
 		return map;
 	}
