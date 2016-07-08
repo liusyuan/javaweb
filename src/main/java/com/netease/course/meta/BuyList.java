@@ -1,7 +1,14 @@
 package com.netease.course.meta;
 
+import java.io.Serializable;
 
-public class BuyList {
+public class BuyList implements Serializable{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2681523933609507404L;
 	private int id;
 	private String title;
 	private int buyPrice;

@@ -1,11 +1,12 @@
 package com.netease.course.controller;
 
+
 import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +31,10 @@ public class ActionController {
 
 	// undefined路径是为了解决在Firefox下购物车页点击退出按钮进入到undefined路径的bug
 	@RequestMapping(value = { "/index", "/", "/undefined" })
-	public String indexPage(Model map, HttpSession session) {
+	public String indexPage(Model map) {
 
-		List<Product> productList = productService.getProductList();
-		map.addAttribute("productList", productList);
+			List<Product> productList = productService.getProductList();
+			map.addAttribute("productList", productList);
 
 		return "index";
 	}
@@ -56,7 +57,7 @@ public class ActionController {
 	public String publicSubmit(Product product,Model map) {
 		try {
 			
-			productService.publish(product);
+			productService.addProduct(product);
 
 		} catch (Exception e) {
 			map.addAttribute("product",null);
@@ -76,7 +77,7 @@ public class ActionController {
 	public String editSumbmit(Product product,Model map) {
 
 		try {
-			productService.update(product);
+			productService.updateProduct(product);
 
 		} catch (Exception e) {
 			
@@ -91,8 +92,9 @@ public class ActionController {
 
 		try {
 			User user = (User) session.getAttribute("user");
+			String userName=user.getUserName();
 			if (user != null) {
-				List<BuyList> buyList = buyListService.getBuyList(user);
+				List<BuyList> buyList = buyListService.getBuyList(userName);
 				map.addAttribute("buyList", buyList);
 			}
 		} catch (Exception e) {

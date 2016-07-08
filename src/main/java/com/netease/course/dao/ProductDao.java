@@ -47,12 +47,12 @@ public interface ProductDao {
 	@Insert("insert into content (id,price,title,icon,abstract,text) "
 			+ "values(#{id},#{price},#{title},#{image},#{summary},#{detail})")
 	@Options(useGeneratedKeys=true, keyProperty="id")
-	public void add(Product product);
+	public void addProduct(Product product);
 	
 	@Delete("delete from content where id=#{id}")
-	public void delete(int id);
+	public void deleteProduct(int id);
 	
 	@Update("update content set price=#{price},title=#{title},"
 			+ "icon=#{image},abstract=#{summary},text=#{detail} where id=#{id}")
-	public void update(Product product);
+	public void updateProduct(Product product);
 }

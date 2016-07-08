@@ -11,7 +11,7 @@ import com.netease.course.meta.BuyList;
 public interface BuyListDao {
 	@Insert("insert into trx (contentId,personId,price,time) "
 			+ "values(#{id},#{personId},#{buyPrice},#{buyTime})")
-	public void trx(BuyList buyList);
+	public void addBuyList(BuyList buyList);
 	
 	
 	
@@ -23,5 +23,5 @@ public interface BuyListDao {
 		@Result(property="number",column="count(contentId)")		
 	})
 	@Select("select contentId,personId,price,time,count(contentId) from trx where contentid = #{id}")
-	public BuyList getOrder(int id);
+	public BuyList getBuyList(int id);
 }

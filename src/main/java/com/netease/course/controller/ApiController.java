@@ -57,7 +57,7 @@ public class ApiController {
 
 		try {
 			
-			trx.buy(buyList);
+			trx.addBuyList(buyList);
 			User user = (User) session.getAttribute("user");
 			User newUser = userService.getUser(user.getUserName());
 			session.setAttribute("user", newUser);
@@ -74,7 +74,7 @@ public class ApiController {
 	public Status delete(@RequestParam int id) {
 
 		try {
-			productService.delete(id);
+			productService.deleteProduct(id);
 			return Status.Ok("删除成功");
 		} catch (Exception e) {
 			e.printStackTrace();

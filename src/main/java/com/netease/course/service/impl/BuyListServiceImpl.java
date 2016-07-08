@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netease.course.meta.User;
 import com.netease.course.service.BuyListService;
 import com.netease.course.dao.ProductDao;
+import com.netease.course.dao.UserDao;
 import com.netease.course.dao.BuyListDao;
 import com.netease.course.meta.BuyList;
 
@@ -20,13 +21,14 @@ import com.netease.course.meta.BuyList;
 public class BuyListServiceImpl implements BuyListService {
 
 	@Autowired
-	BuyListDao trxDao;
+	BuyListDao buyListDao;
 	@Autowired
 	ProductDao productDao;
-
+	@Autowired
+	UserDao userDao;
 	
 	@Override
-	public void buy(List<BuyList> buyList) throws Exception{
+	public void addBuyList(List<BuyList> buyList) throws Exception{
 
 
 			for (BuyList order : buyList) {			
@@ -38,7 +40,7 @@ public class BuyListServiceImpl implements BuyListService {
 					Date date = new Date();
 					order.setBuyTime(date.getTime());
 					order.setBuyPrice(buyPrice);
-					trxDao.trx(order);
+					buyListDao.addBuyList(order);
 					
 				}
 			}
@@ -47,11 +49,11 @@ public class BuyListServiceImpl implements BuyListService {
 
 	@Transactional(readOnly=true)
 	@Override
-	public List<BuyList> getBuyList(User user) throws Exception{
-
+	public List<BuyList> getBuyList(String userName) throws Exception{
+		User user=userDao.getUser(userName);
 		List<BuyList> buyLists=user.getBuyList();
 		for(BuyList buyList:buyLists){
-			int number=trxDao.getOrder(buyList.getId()).getNumber();
+			int number=buyListDao.getBuyList(buyList.getId()).getNumber();
 			buyList.setBuyNum(number);
 			buyList.setTotal(buyList.getBuyPrice()*number);
 		}

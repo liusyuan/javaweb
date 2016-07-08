@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.netease.course.dao.UserDao;
 import com.netease.course.meta.BuyList;
 import com.netease.course.meta.User;
-import com.netease.course.service.BuyListService;
 import com.netease.course.test.service.TestBuyListService;
 
 /**

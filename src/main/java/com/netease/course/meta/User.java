@@ -1,11 +1,13 @@
 package com.netease.course.meta;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.netease.course.meta.BuyList;
 
-public class User {
+public class User implements Serializable{
 	
+	private static final long serialVersionUID = -6969195671935482609L;	
 	private int personid;
 	private int usertype;
 	private String userName;

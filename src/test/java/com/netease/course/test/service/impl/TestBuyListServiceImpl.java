@@ -35,7 +35,7 @@ public class TestBuyListServiceImpl implements TestBuyListService {
 				Date date = new Date();
 				order.setBuyTime(date.getTime());
 				order.setBuyPrice(buyPrice);
-				trxDao.trx(order);
+				trxDao.addBuyList(order);
 
 			}
 
@@ -54,7 +54,7 @@ public class TestBuyListServiceImpl implements TestBuyListService {
 
 		List<BuyList> buyLists = user.getBuyList();
 		for (BuyList buyList : buyLists) {
-			int number = trxDao.getOrder(buyList.getId()).getNumber();
+			int number = trxDao.getBuyList(buyList.getId()).getNumber();
 			buyList.setBuyNum(number);
 			buyList.setTotal(buyList.getBuyPrice() * number);
 		}

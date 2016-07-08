@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
 			Product product = productDao.getProduct(id);
 			if (product != null) {
-				BuyList trx = buyListDao.getOrder(product.getId());
+				BuyList trx = buyListDao.getBuyList(product.getId());
 				if (trx.getNumber() != 0) {
 					product.setIsBuy(true);
 					product.setIsSell(true);
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
 			for (Product product : productList) {
 				if (product != null) {
 
-					if (buyListDao.getOrder(product.getId()).getNumber() != 0) {
+					if (buyListDao.getBuyList(product.getId()).getNumber() != 0) {
 						// 已购买
 						product.setIsBuy(true);
 						//已卖出
@@ -70,20 +70,20 @@ public class ProductServiceImpl implements ProductService {
 
 	// 删除产品
 	@Override
-	public void delete(int id){
-		productDao.delete(id);
+	public void deleteProduct(int id){
+		productDao.deleteProduct(id);
 	}
 
 	// 发布产品
 	@Override
-	public void publish(Product product){
-		productDao.add(product);		
+	public void addProduct(Product product){
+		productDao.addProduct(product);		
 	}
 
 	// 更新产品
 	@Override
-	public void update(Product product){
-		productDao.update(product);
+	public void updateProduct(Product product){
+		productDao.updateProduct(product);
 	}
 
 }
