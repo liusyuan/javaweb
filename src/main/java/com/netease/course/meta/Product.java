@@ -11,8 +11,8 @@ public class Product implements Serializable{
 	 */
 	private static final long serialVersionUID = -6314120908651695083L;
 	private int id;
-	private int price;  
-	private int buyPrice;
+	private double price;  
+	private double buyPrice;
 	private String title;
 	private String image;
 	private String summary;
@@ -39,10 +39,10 @@ public class Product implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public String getTitle() {
@@ -89,10 +89,10 @@ public class Product implements Serializable{
 		this.isSell = isSell;
 	}
 
-	public int getBuyPrice() {
+	public double getBuyPrice() {
 		return buyPrice;
 	}
-	public void setBuyPrice(int buyPrice) {
+	public void setBuyPrice(double buyPrice) {
 		this.buyPrice = buyPrice;
 	}
 }

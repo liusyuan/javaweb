@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netease.course.service.ProductService;
+import com.netease.course.utils.PriceUtil;
 import com.netease.course.dao.ProductDao;
 import com.netease.course.dao.BuyListDao;
 import com.netease.course.meta.BuyList;
@@ -26,27 +27,34 @@ public class ProductServiceImpl implements ProductService {
 
 			Product product = productDao.getProduct(id);
 			if (product != null) {
-				BuyList trx = buyListDao.getBuyList(product.getId());
-				if (trx.getNumber() != 0) {
+				
+				product.setPrice(PriceUtil.toYuan(product.getPrice()));
+				//设置Product已购买已售属性
+				BuyList buyList = buyListDao.getBuyList(product.getId());
+				if (buyList.getNumber() != 0) {
 					product.setIsBuy(true);
 					product.setIsSell(true);
-					product.setBuyPrice(trx.getBuyPrice());
+					product.setBuyPrice(buyList.getBuyPrice());
 				} else {
 					product.setIsBuy(false);
 					product.setIsSell(false);
 				}
+				
+				
+				
 			}
+
 			return product;
 	}
 
 	// 获取商品列表
 	@Transactional(readOnly = true)
 	public List<Product> getProductList() {
-		try {
+
 			List<Product> productList = productDao.getProductList();
 			for (Product product : productList) {
 				if (product != null) {
-
+					product.setPrice(PriceUtil.toYuan(product.getPrice()));
 					if (buyListDao.getBuyList(product.getId()).getNumber() != 0) {
 						// 已购买
 						product.setIsBuy(true);
@@ -60,12 +68,10 @@ public class ProductServiceImpl implements ProductService {
 					}
 				}
 			}
-			return productList;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 
+			return productList;
+
+		
 	}
 
 	// 删除产品
@@ -77,12 +83,15 @@ public class ProductServiceImpl implements ProductService {
 	// 发布产品
 	@Override
 	public void addProduct(Product product){
+		product.setPrice(PriceUtil.toFen(product.getPrice()));
 		productDao.addProduct(product);		
 	}
 
 	// 更新产品
 	@Override
 	public void updateProduct(Product product){
+		
+		product.setPrice(PriceUtil.toFen(product.getPrice()));
 		productDao.updateProduct(product);
 	}
 

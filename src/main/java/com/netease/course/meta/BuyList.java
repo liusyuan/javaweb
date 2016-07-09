@@ -11,11 +11,11 @@ public class BuyList implements Serializable{
 	private static final long serialVersionUID = 2681523933609507404L;
 	private int id;
 	private String title;
-	private int buyPrice;
+	private double buyPrice;
 	private long buyTime;
 	private String image;
 	private int number;
-	private int total;
+	private double total;
 	private int personId;
 	private int buyNum;
 
@@ -37,10 +37,10 @@ public class BuyList implements Serializable{
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
-	public int getTotal() {
+	public double getTotal() {
 		return total;
 	}
-	public void setTotal(int total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 	public int getId() {
@@ -61,10 +61,10 @@ public class BuyList implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getBuyPrice() {
+	public double getBuyPrice() {
 		return buyPrice;
 	}
-	public void setBuyPrice(int buyPrice) {
+	public void setBuyPrice(double buyPrice) {
 		this.buyPrice = buyPrice;
 	}
 	public long getBuyTime() {

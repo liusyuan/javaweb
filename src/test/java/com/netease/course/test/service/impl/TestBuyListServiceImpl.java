@@ -29,7 +29,7 @@ public class TestBuyListServiceImpl implements TestBuyListService {
 		try {
 			for (BuyList order : buyList) {
 				int contentId = order.getId();
-				int buyPrice = productDao.getProduct(contentId).getPrice();
+				double buyPrice = productDao.getProduct(contentId).getPrice();
 
 				order.setPersonId(0);
 				Date date = new Date();

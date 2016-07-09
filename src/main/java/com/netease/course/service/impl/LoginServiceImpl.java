@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
 			User user = dao.getUser(userName);
 
 			if (user == null) {
-				return Status.Error("用户不存在");
+				return Status.error("用户不存在");
 			}
 
 			else if (user.getPassword().equals(password) && user.getUserName().equals(userName)) {
@@ -38,7 +38,7 @@ public class LoginServiceImpl implements LoginService {
 			}
 
 			else {
-				return Status.Error("密码错误");
+				return Status.error("密码错误");
 			}
 
 

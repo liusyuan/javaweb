@@ -15,8 +15,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="com.netease.course" />
-	
+	<context:component-scan base-package="com.netease.course.controller" />
 	<!-- 配置静态资源 -->
 	<mvc:resources location="/css/" mapping="/css/**" /> 
 	<mvc:resources location="/js/" mapping="/js/**" />
@@ -30,7 +29,7 @@
 	
 	<aop:aspectj-autoproxy/>
 	
-	<bean id="logInterceptor" class="com.netease.course.aop.LogInterceptor" />
+	<bean id="logAspect" class="com.netease.course.aspect.LogAspect" />
   
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -78,7 +77,7 @@
 	<!-- 文件上传解析器，限制大小1MB -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1048576" />
+		<property name="maxUploadSize" value="10485760" />
 	</bean>
 	
 	<bean

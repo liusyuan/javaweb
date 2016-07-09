@@ -22,18 +22,22 @@ public class Status {
 	 * @param msg 错误信息
 	 * @return
 	 */
-	public static Status Error(String msg){
+	public static Status error(String msg){
 		return new Status(401,msg,false);
 	}
+
 	/**
 	 * 请求成功
 	 * @param msg 成功信息
 	 * @return
 	 */
-	public static Status Ok(String msg){
+	public static Status ok(String msg){
 		return new Status(200,msg,true);
 	}
-
+	
+	public static Status ok(int code,String msg){
+		return new Status(code,msg,true);
+	}
 	public int getCode() {
 		return code;
 	}

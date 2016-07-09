@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import com.netease.course.meta.User;
+import com.netease.course.utils.BuyException;
 import com.netease.course.utils.Status;
 
 /*
@@ -17,15 +18,15 @@ import com.netease.course.utils.Status;
  */
 
 @Aspect
-public class LogAspect {
-	private static final Logger log=Logger.getLogger(LogAspect.class);
+public class LogInterceptor {
+	private static final Logger log=Logger.getLogger(LogInterceptor.class);
 	@Autowired
 	private HttpSession session;
 
     
     
 	@AfterReturning(pointcut="execution(* com.netease.course.controller.ApiController.*(..))",returning="status")		
-	public void afterReturn(Status status){
+	public void doAfterReturn(Status status){
 
 		User user=(User) session.getAttribute("user");
 		if(user!=null){
@@ -40,12 +41,17 @@ public class LogAspect {
 	 */
 	@AfterReturning(pointcut="execution(* com.netease.course.controller.LoginController.logout(..))")
 	public void logout(){
+		session.invalidate();
 		log.info("退出登陆");
 	}
 	
-	@AfterThrowing(pointcut="execution(* com.netease.course.service..*.*(..))",throwing="e")
-	private void afterThrowing(Throwable e){
-		log.info("异常");
-		log.error(e.toString());
+	@AfterThrowing(pointcut="execution(* com.netease.course.service.*.*.*(..))",throwing="e")
+	private void doAfterThrowing(Throwable e) throws Throwable{
+		if(e.getClass().equals(BuyException.class)){
+			log.info(e.getMessage());
+		}else{
+			log.error(e.getMessage(),e);
+		}
+
 	}
 }

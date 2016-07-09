@@ -1,12 +1,9 @@
 package com.netease.course.aop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -22,14 +19,13 @@ public class CacheInterceptor {
 	private MemCachedClient memCachedClient;
 
 	public static final int TIMEOUT = 3600;// 缓存失效时间1小时
-
+	private static final Logger logger=Logger.getLogger(CacheInterceptor.class);
 	public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 		// 获取key
 		String cacheKey = getCacheKey(pjp);
-		System.out.println(cacheKey);
 		// 如果Memcached 连接失败，直接返回service
 		if (memCachedClient.stats().isEmpty()) {
-			System.out.println("memcached连接失败");
+			logger.error("memcached连接失败");
 			return pjp.proceed();
 		}
 		if (memCachedClient.get(cacheKey) == null) {
@@ -40,16 +36,18 @@ public class CacheInterceptor {
 			memCachedClient.set(cacheKey, proceed, TIMEOUT);
 			// 保存key
 			saveCacheKey(cacheKey, pjp);
-			System.out.println("存入缓存");
+
 			return proceed;
 		} else {
 			// 如果memcach中有数据，返回memcached中的数据
-			System.out.println("返回memcached数据");
 			return memCachedClient.get(cacheKey);
 		}
 	}
 
-	// 数据库数据变更,清理缓存
+	/**
+	 * 当这个类下某个方法改动数据库时，删除该类的所有缓存
+	 * @param jp
+	 */
 	public void doAfter(JoinPoint jp) {
 		String packageName = jp.getTarget().getClass().getName();
 		
@@ -58,7 +56,7 @@ public class CacheInterceptor {
 		//遍历
 		for(String key:list){
 				memCachedClient.delete(key);
-				System.out.println("删除key:"+key);
+
 		}
 		//memCachedClient.flushAll();
 
@@ -82,7 +80,12 @@ public class CacheInterceptor {
 
 		return key.toString();
 	}
-
+/**
+ * 将key保存在memcash中
+ * 以类名分类，将同类下所有方法的key保存在一起
+ * @param cacheKey
+ * @param pjp
+ */
 	public void saveCacheKey(String cacheKey, ProceedingJoinPoint pjp) {
 
 		String packageName = pjp.getTarget().getClass().getName();
@@ -91,13 +94,13 @@ public class CacheInterceptor {
 			List<String> list =new ArrayList<String>();
 			list.add(cacheKey);
 			memCachedClient.set(packageName, list);
-			System.out.println(packageName+"中新存入:"+list);
+
 		} else {
 			@SuppressWarnings("unchecked")
 			List<String> list = (List<String>) memCachedClient.get(packageName);
 			list.add(cacheKey);
 			memCachedClient.set(packageName,list);
-			System.out.println(packageName+"中更新:"+list);
+
 		}
 
 	}

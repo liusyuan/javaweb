@@ -1,8 +1,6 @@
 package com.netease.course.controller;
 
-
 import java.util.List;
-
 
 import javax.servlet.http.HttpSession;
 
@@ -33,17 +31,25 @@ public class ActionController {
 	@RequestMapping(value = { "/index", "/", "/undefined" })
 	public String indexPage(Model map) {
 
+		try {
 			List<Product> productList = productService.getProductList();
 			map.addAttribute("productList", productList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "index";
 	}
 
 	@RequestMapping("/show")
 	public String show(@RequestParam int id, Model map) {
+		try {
+			Product product = productService.getProduct(id);			
+			map.addAttribute("product", product);
 
-		Product product = productService.getProduct(id);
-		map.addAttribute("product", product);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "show";
 	}
 
@@ -54,13 +60,13 @@ public class ActionController {
 	}
 
 	@RequestMapping(value = "/publicSubmit", method = RequestMethod.POST)
-	public String publicSubmit(Product product,Model map) {
+	public String publicSubmit(Product product, Model map) {
 		try {
-			
+
 			productService.addProduct(product);
 
 		} catch (Exception e) {
-			map.addAttribute("product",null);
+			map.addAttribute("product", null);
 			e.printStackTrace();
 		}
 		return "publicSubmit";
@@ -74,14 +80,14 @@ public class ActionController {
 	}
 
 	@RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
-	public String editSumbmit(Product product,Model map) {
+	public String editSumbmit(Product product, Model map) {
 
 		try {
 			productService.updateProduct(product);
 
 		} catch (Exception e) {
-			
-			map.addAttribute("product",null);
+
+			map.addAttribute("product", null);
 			e.printStackTrace();
 		}
 		return "editSubmit";
@@ -92,7 +98,7 @@ public class ActionController {
 
 		try {
 			User user = (User) session.getAttribute("user");
-			String userName=user.getUserName();
+			String userName = user.getUserName();
 			if (user != null) {
 				List<BuyList> buyList = buyListService.getBuyList(userName);
 				map.addAttribute("buyList", buyList);
