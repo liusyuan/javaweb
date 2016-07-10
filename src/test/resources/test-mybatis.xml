@@ -22,7 +22,7 @@
 		<property name="mapperLocations" value="classpath:userMapper.xml"></property>
 	</bean>
 
-	<tx:annotation-driven transaction-manager="txManager" />
+	<tx:annotation-driven transaction-manager="txManager"/>
 
 
 

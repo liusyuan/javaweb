@@ -60,10 +60,10 @@
 		}
 		
 		var newProducts = products.map(function(arr) {
+			var Str=arr.price;
 			return {
 				'id' : arr.id,
 				'number' : arr.num,
-				'buyPrice' : arr.price
 			};
 		});
 		console.log(newProducts);

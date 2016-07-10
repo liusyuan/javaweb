@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:memcached.xml")
+@ContextConfiguration(locations="classpath:/memcached.xml")
 public class TestMemcached{
 	@Autowired
 	private MemCachedClient memCachedClient;
@@ -24,7 +24,7 @@ public class TestMemcached{
 	public void testAdd() throws Exception{
 
 		memCachedClient.set("netease", "网易");
-		System.out.println(memCachedClient.get("com.netease.course.service.impl.ProductServiceImpl.getProduct.10"));
+		memCachedClient.flushAll();
 //		JSONObject json=JSONObject.fromObject(memCachedClient.statsItems());
 //		System.out.println(json);
 //		JSONObject json2=JSONObject.fromObject(memCachedClient.statsCacheDump(8, 0));

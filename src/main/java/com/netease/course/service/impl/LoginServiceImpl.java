@@ -1,6 +1,8 @@
 package com.netease.course.service.impl;
 
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,16 @@ import com.netease.course.service.LoginService;
 import com.netease.course.dao.UserDao;
 import com.netease.course.utils.Status;
 
+
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private UserDao dao;
-
+	
+	@Autowired
+	HttpServletResponse resp;
 	@Override
 	public Status doLogin(HttpServletRequest req) {
 
@@ -34,6 +40,7 @@ public class LoginServiceImpl implements LoginService {
 			else if (user.getPassword().equals(password) && user.getUserName().equals(userName)) {
 
 				session.setAttribute("user", user);
+				session.setMaxInactiveInterval(60*60*2);
 				return Status.LOGIN_SUCCEESS;
 			}
 

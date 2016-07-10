@@ -54,12 +54,14 @@ public class ApiController {
 
 	@RequestMapping(value = "/buy")
 	@ResponseBody
-	public Status buy(@RequestBody List<BuyList> buyList, HttpSession session) throws Exception {
+	public Status buy(@RequestBody List<BuyList> buyLists, HttpSession session) throws Exception {
 		
 		try {
-			trx.addBuyList(buyList);
+			System.out.println("开始购买");
+			trx.addBuyList(buyLists);
 			User user = (User) session.getAttribute("user");
 			User newUser = userService.getUser(user.getUserName());
+			System.out.println("购买成功");
 			session.setAttribute("user", newUser);
 			return Status.ok("购买成功");
 		}catch(BuyException e){ 
