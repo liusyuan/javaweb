@@ -51,13 +51,18 @@ public class CacheInterceptor {
 	public void doAfter(JoinPoint jp) {
 		String packageName = jp.getTarget().getClass().getName();
 		
-		@SuppressWarnings("unchecked")
-		List<String> list =(List<String>) memCachedClient.get(packageName);
-		//遍历
-		for(String key:list){
-				memCachedClient.delete(key);
+		if (!memCachedClient.stats().isEmpty()) {
+			@SuppressWarnings("unchecked")
+			List<String> list =(List<String>) memCachedClient.get(packageName);
+			//遍历
+			for(String key:list){
+					memCachedClient.delete(key);
 
+			}
+		}else{
+			logger.error("memcached连接失败");
 		}
+
 		//memCachedClient.flushAll();
 
 	}

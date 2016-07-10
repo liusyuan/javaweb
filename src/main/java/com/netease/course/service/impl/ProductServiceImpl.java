@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 				if (buyList.getNumber() != 0) {
 					product.setIsBuy(true);
 					product.setIsSell(true);
-					product.setBuyPrice(buyList.getBuyPrice());
+					product.setBuyPrice(PriceUtil.toYuan(buyList.getBuyPrice()));
 				} else {
 					product.setIsBuy(false);
 					product.setIsSell(false);

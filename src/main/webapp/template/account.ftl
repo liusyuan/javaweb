@@ -17,7 +17,7 @@
     <table class="m-table m-table-row n-table g-b3">
         <colgroup><col class="img"/><col/><col class="time"/><col/><col class="num"/><col/><col class="price"/><col/></colgroup>
         <thead>
-            <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>单价</th><th>实付款</th></tr>
+            <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th><th>实付款</th></tr>
         </thead>
         <tbody>
             <#list buyList as x>
