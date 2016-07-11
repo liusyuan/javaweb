@@ -32,6 +32,8 @@ public class ProductServiceImpl implements ProductService {
 				//设置Product已购买已售属性
 				BuyList buyList = buyListDao.getBuyList(product.getId());
 				if (buyList.getNumber() != 0) {
+					product.setBuyNum(buyList.getNumber());
+					product.setSaleNum(buyList.getNumber());
 					product.setIsBuy(true);
 					product.setIsSell(true);
 					product.setBuyPrice(PriceUtil.toYuan(buyList.getBuyPrice()));

@@ -18,7 +18,11 @@
             <div class="price">
                 <span class="v-unit">¥</span><span class="v-value">${product.price}</span>
             </div>
+            <#if user&&user.usertype==0>
             <div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">${product.buyNum}</span><span id="addNum" class="moreNum"><a>+</a></span></div>
+            	<#else>
+            	<div class="num">售出数量：${product.saleNum}</div>
+            </#if>
             <div class="oprt f-cb">
                 <#if user && user.usertype==0>
                     <#if product.isBuy>
