@@ -76,8 +76,15 @@ public class ProductServiceImpl implements ProductService {
 
 	// 删除产品
 	@Override
-	public void deleteProduct(int id){
-		productDao.deleteProduct(id);
+	public boolean deleteProduct(int id){
+		//如果删除产品时恰好买家购买了，则删除失败
+		if(buyListDao.getBuyList(id).getNumber()>0){
+			return false;
+		}else{
+			productDao.deleteProduct(id);
+			return true;
+		}
+		
 	}
 
 	// 发布产品

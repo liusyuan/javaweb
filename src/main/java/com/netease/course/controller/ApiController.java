@@ -57,11 +57,9 @@ public class ApiController {
 	public Status buy(@RequestBody List<BuyList> buyLists, HttpSession session) throws Exception {
 		
 		try {
-			System.out.println("开始购买");
 			trx.addBuyList(buyLists);
 			User user = (User) session.getAttribute("user");
 			User newUser = userService.getUser(user.getUserName());
-			System.out.println("购买成功");
 			session.setAttribute("user", newUser);
 			return Status.ok("购买成功");
 		}catch(BuyException e){ 
@@ -78,8 +76,11 @@ public class ApiController {
 	public Status delete(@RequestParam int id) {
 
 		try {
-			productService.deleteProduct(id);
-			return Status.ok("删除成功");
+			if(productService.deleteProduct(id)){
+				return Status.ok("删除成功");
+			}else
+				return Status.error("买家已购买");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Status.error("删除失败");

@@ -22,14 +22,21 @@
 				onconfirm:function(){
 					layer.hide();
 					loading.show();
+
 					ajax({
 						url:'/api/delete',
 						data:{id:id},
 						success:function(json){
 							this.delItemNode(id);
 							loading.result('删除成功');
-						}.bind(this)
+						}.bind(this),
+						error:function(json){
+							loading.result('删除失败',function() {
+								location.href = '/';
+							});
+						}
 					});
+					
 				}.bind(this)
 			}).show();
 		},
